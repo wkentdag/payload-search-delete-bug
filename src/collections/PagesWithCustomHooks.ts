@@ -10,14 +10,15 @@ const PagesWithCustomHooks: CollectionConfig = {
   },
   hooks: {
     // https://github.com/payloadcms/payload/blob/main/packages/plugin-search/src/Search/hooks/deleteFromSearch.ts
-    // this hook is identical to the one used by `plugin-search`
+    // this hook is identical to the one used by `plugin-search`...
     afterDelete: [
       async ({ doc, req: { payload }, req }) => {
         try {
           const searchDocQuery = await payload.find({
             collection: "search",
             depth: 0,
-            req,
+            // ...except for this line:
+            // req,
             where: {
               "doc.value": {
                 equals: doc.id,
